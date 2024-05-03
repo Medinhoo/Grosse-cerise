@@ -1,7 +1,12 @@
+import Navbar from "./Navbar"
+import Dashboard from "./Dashboard"
 
 function App() {
-  return(
-    <div>coucou</div>
+  return (
+    <>
+      <Navbar />
+      <Dashboard />
+    </>
   )
 }
 
