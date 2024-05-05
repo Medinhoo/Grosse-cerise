@@ -6,7 +6,7 @@ const RightBar = () => {
     <Box flex={1}
     gap={2}
     m={2}
-      sx={{ display: { xs: "none", md: "flex" }, width: '20%', flexDirection:"column", alignItems: "center"}}>
+      sx={{ display: { xs: "none", md: "flex" }, flexDirection:"column", alignItems: "center"}}>
         <Typography variant='h6' color="gray"> Community posts</Typography>
       <Card sx={{ maxWidth: 345 }}>
         <CardMedia

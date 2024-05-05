@@ -3,9 +3,13 @@ import Navbar from "./Navbar"
 import LeftBar from "./LeftBar"
 import GroceryList from "./GroceryList"
 import RightBar from "./RightBar"
-import AddComponent from "./AddComponent"
+import AddListComponent from "./AddListComponent"
+import { useState } from "react"
 
 function App() {
+
+  const [lists, setLists] = useState([]);
+
   return (
     <>
       <Navbar />
@@ -17,10 +21,10 @@ function App() {
         width="100%"
       >
         <LeftBar />
-        <GroceryList />
+        {lists.length !== 0 ? <GroceryList lists={lists} setLists={setLists} /> : <div style={{ width: '50%', height: '100%' }} />}
         <RightBar />
       </Stack>
-      <AddComponent/>
+      <AddListComponent lists={lists} setLists={setLists}/>
     </>
   )
 }

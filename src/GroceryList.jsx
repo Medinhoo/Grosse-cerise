@@ -47,7 +47,7 @@ function AddProductModal(props) {
 }
 
 
-const GroceryList = () => {
+const GroceryList = ({lists, setLists}) => {
 
   const [openAddProduct, setOpenAddProduct] = useState(false);
   const [quantity, setQuantity] = useState(0);
@@ -109,8 +109,7 @@ const GroceryList = () => {
         <AppBar position="static">
           <Toolbar>
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-              Grocery List
-            </Typography>
+            {lists[0]}    </Typography>
             <IconButton color="inherit" onClick={handleOpenAddProduct}>
               <Add />
             </IconButton>
