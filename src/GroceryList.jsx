@@ -105,7 +105,7 @@ const GroceryList = () => {
 
   return (
     <Box display="flex" justifyContent="center" sx={{width:{md:'50%', xs:"80%"}}}>
-      <Box py={4} width='100%'>
+      <Box py={2} width='100%'>
         <AppBar position="static">
           <Toolbar>
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>

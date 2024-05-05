@@ -8,7 +8,7 @@ const AddComponent = () => {
         <Tooltip title="Create a list" sx={{
             position: "fixed",
             bottom: 20,
-            left: {xs:'calc(50% - 25px)', sm:'20px'}
+            left: {xs:'calc(50% - 25px)', md:'20px'}
         }}>
             <Fab color="primary" aria-label="add">
                 <AddIcon />
