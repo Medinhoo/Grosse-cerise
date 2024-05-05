@@ -3,19 +3,17 @@ import LocalGroceryStoreIcon from '@mui/icons-material/LocalGroceryStore';
 import DeleteIcon from '@mui/icons-material/Delete';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import HomeIcon from '@mui/icons-material/Home';
+import PeopleIcon from '@mui/icons-material/People';
 import React, { useState } from 'react'
 
 const LeftBar = () => {
 
-    const label = { inputProps: { 'aria-label': 'Color switch demo' } };
     const [darkMode, setDarkMode] = useState(false);
 
     return (
         <Box
-            flex={1}
-            sx={{ display: { xs: "none", md: "block" }}}
-            >
-            <Box>
+            sx={{ display: { xs: "none", md: "block" }, width: '20%' }}>
+            <Box position="fixed">
                 <List>
                     <ListItem disablePadding>
                         <ListItemButton>
@@ -36,9 +34,9 @@ const LeftBar = () => {
                     <ListItem disablePadding>
                         <ListItemButton>
                             <ListItemIcon>
-                                <LocalGroceryStoreIcon />
+                                <PeopleIcon />
                             </ListItemIcon>
-                            <ListItemText primary="My Groceries" />
+                            <ListItemText primary="Community" />
                         </ListItemButton>
                     </ListItem>
                     <ListItem disablePadding>
@@ -52,7 +50,7 @@ const LeftBar = () => {
                     <ListItem disablePadding>
                         <Container sx={{ display: "flex", alignItems: 'center' }}>
                             <DarkModeIcon />
-                            <Switch {...label} defaultValue={false} color="primary" onClick={e => setDarkMode(!darkMode)} />
+                            <Switch defaultValue={false} color="primary" onClick={e => setDarkMode(!darkMode)} />
                         </Container>
                     </ListItem>
                 </List>
