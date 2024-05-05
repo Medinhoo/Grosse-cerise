@@ -13,7 +13,10 @@ const Navbar = () => {
   return (
     <AppBar position='sticky'>
       <StyledToolbar>
-        <MenuIcon />
+
+        <IconButton>
+        <MenuIcon sx={{color:'white'}}/>
+        </IconButton>
 
         <Typography
           variant="h6"
