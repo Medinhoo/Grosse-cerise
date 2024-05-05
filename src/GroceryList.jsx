@@ -4,6 +4,49 @@ import { DataGrid } from '@mui/x-data-grid';
 import { Delete } from '@mui/icons-material';
 import React, { useState } from 'react';
 
+
+function AddProductModal(props) {
+  return (<Modal open={props.openAddProduct} onClose={props.handleCloseAddProduct} sx={{
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center'
+  }}>
+    <Stack direction="column" justifyContent="center" alignItems="center" width={500} height={400} bgcolor="white" p={3} borderRadius={5} gap={1}>
+      <Typography textAlign="center" color="gray">Add a product to your list</Typography>
+      <Autocomplete id="free-solo-demo" value={props.selectedProduct} onChange={(event, newValue) => {
+        props.setSelectedProduct(newValue);
+      }} freeSolo options={products} renderInput={params => <TextField {...params} label="Products" />} sx={{
+        width: "100%"
+      }} />
+
+      <Typography textAlign="center" color="gray" pt={1}>Quantity :</Typography>
+      <Slider defaultValue={1} value={props.quantity} onChange={e => props.setQuantity(e.target.value)} max={20} valueLabelDisplay="auto" sx={{
+        width: "80%"
+      }} />
+      <Autocomplete id="free-solo-demo" value={props.selectedStore} onChange={(event, newValue) => {
+        props.setSelectedStore(newValue);
+      }} options={stores} renderInput={params => <TextField {...params} label="Stores" />} sx={{
+        width: "100%"
+      }} />
+      <Typography textAlign="center" color="gray" pt={1}>Importance :</Typography>
+
+      <Slider color="error" defaultValue={1} value={props.importance} onChange={e => props.setImportance(e.target.value)} max={10} valueLabelDisplay="auto" sx={{
+        width: "80%"
+      }} />
+
+      <Box display="flex" justifyContent="space-between" width="100%" mt={4}>
+        <Button variant="contained" color="success" onClick={props.handleAddProduct}>
+          Add product
+        </Button>
+        <Button variant="contained" color="error" onClick={props.handleCloseAddProduct}>
+          Cancel
+        </Button>
+      </Box>
+    </Stack>
+  </Modal>);
+}
+
+
 const GroceryList = () => {
 
   const [openAddProduct, setOpenAddProduct] = useState(false);
@@ -60,11 +103,9 @@ const GroceryList = () => {
 
   };
 
-
-
   return (
-    <>
-      <Box width='50%' p={4}>
+    <Box display="flex" justifyContent="center" sx={{width:{md:'50%', xs:"80%"}}}>
+      <Box py={4} width='100%'>
         <AppBar position="static">
           <Toolbar>
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
@@ -83,53 +124,11 @@ const GroceryList = () => {
           />
         </div>
       </Box>
-      <Modal
-        open={openAddProduct}
-        onClose={handleCloseAddProduct}
-        sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
-      >
-        <Stack
-          direction="column" justifyContent="center" alignItems="center" width={500} height={400} bgcolor="white" p={3} borderRadius={5} gap={1}>
-          <Typography textAlign="center" color="gray">Add a product to your list</Typography>
-          <Autocomplete
-            id="free-solo-demo"
-            value={selectedProduct}
-            onChange={(event, newValue) => {
-              setSelectedProduct(newValue);
-            }}
-            freeSolo
-            options={products}
-            renderInput={(params) => <TextField {...params} label="Products" />}
-            sx={{ width: "100%" }}
-          />
-
-          <Typography textAlign="center" color="gray" pt={1}>Quantity :</Typography>
-          <Slider defaultValue={1} value={quantity} onChange={e => setQuantity(e.target.value)} max={20} valueLabelDisplay="auto" sx={{ width: "80%" }} />
-          <Autocomplete
-            id="free-solo-demo"
-            value={selectedStore}
-            onChange={(event, newValue) => {
-              setSelectedStore(newValue);
-            }}
-            options={stores}
-            renderInput={(params) => <TextField {...params} label="Stores" />}
-            sx={{ width: "100%" }}
-          />
-          <Typography textAlign="center" color="gray" pt={1}>Importance :</Typography>
-
-          <Slider color="error" defaultValue={1} value={importance} onChange={e => setImportance(e.target.value)} max={10} valueLabelDisplay="auto" sx={{ width: "80%" }} />
-
-          <Box display="flex" justifyContent="space-between" width="100%" mt={4}>
-            <Button variant="contained" color="success" onClick={handleAddProduct}>
-              Add product
-            </Button>
-            <Button variant="contained" color="error" onClick={handleCloseAddProduct}>
-              Cancel
-            </Button>
-          </Box>
-        </Stack>
-      </Modal>
-    </>
+      <AddProductModal openAddProduct={openAddProduct} quantity={quantity} setQuantity={setQuantity} 
+      importance={importance} setImportance={setImportance} selectedProduct={selectedProduct} 
+      setSelectedProduct={setSelectedProduct} selectedStore={selectedStore} setSelectedStore={setSelectedStore} 
+      handleCloseAddProduct={handleCloseAddProduct} handleAddProduct={handleAddProduct}></AddProductModal>
+    </Box>
   );
 }
 

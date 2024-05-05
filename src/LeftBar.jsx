@@ -13,8 +13,9 @@ const LeftBar = () => {
     return (
         <Box
             flex={1}
-            sx={{ display: { xs: "none", sm: "block" }, minWidth: "225px", }}>
-            <Box position="fixed">
+            sx={{ display: { xs: "none", md: "block" }}}
+            >
+            <Box>
                 <List>
                     <ListItem disablePadding>
                         <ListItemButton>
