@@ -56,7 +56,6 @@ const GroceryList = ({lists, setLists}) => {
   const [selectedStore, setSelectedStore] = useState(stores[0]);
 
   const [rows, setRows] = useState([
-    { id: 1, productName: 'Apple', quantity: 10, Store: 'Aldi', importance: 9 },
   ]);
 
   const columns = [

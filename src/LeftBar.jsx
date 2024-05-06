@@ -1,6 +1,6 @@
 import { Box, Container, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Switch } from '@mui/material'
 import LocalGroceryStoreIcon from '@mui/icons-material/LocalGroceryStore';
-import DeleteIcon from '@mui/icons-material/Delete';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import HomeIcon from '@mui/icons-material/Home';
 import PeopleIcon from '@mui/icons-material/People';
@@ -28,7 +28,7 @@ const LeftBar = () => {
                             <ListItemIcon>
                                 <LocalGroceryStoreIcon />
                             </ListItemIcon>
-                            <ListItemText primary="My Groceries" />
+                            <ListItemText primary="My Lists" />
                         </ListItemButton>
                     </ListItem>
                     <ListItem disablePadding>
@@ -42,9 +42,9 @@ const LeftBar = () => {
                     <ListItem disablePadding>
                         <ListItemButton>
                             <ListItemIcon>
-                                <DeleteIcon />
+                                <AccountCircleIcon />
                             </ListItemIcon>
-                            <ListItemText primary="My last grocery list" />
+                            <ListItemText primary="My Profile" />
                         </ListItemButton>
                     </ListItem>
                     <ListItem disablePadding>
