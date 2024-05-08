@@ -8,7 +8,7 @@ import AddListComponent from "./AddListComponent";
 import { useState } from "react";
 
 function App() {
-  const [lists, setLists] = useState(['courses du jeudi']);
+  const [lists, setLists] = useState([]);
 
   return (
     <>
@@ -21,7 +21,7 @@ function App() {
         width="100%"
       >
         <LeftBar />
-        {/*lists.length !== 0 ? (
+        {lists.length !== 0 ? (
           <GroceryList lists={lists} setLists={setLists} />
         ) : (
           <div style={{ width: "50%", height: "100%" }}>
@@ -35,8 +35,8 @@ function App() {
               No grocery list selected
             </Typography>
           </div>
-        )*/}
-        <MyLists lists={lists}/>
+        )}
+        {/* <MyLists lists={lists}/> */}
         <RightBar />
       </Stack>
       <AddListComponent lists={lists} setLists={setLists} />
