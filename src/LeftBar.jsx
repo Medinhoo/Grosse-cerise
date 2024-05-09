@@ -5,6 +5,7 @@ import DarkModeIcon from '@mui/icons-material/DarkMode';
 import HomeIcon from '@mui/icons-material/Home';
 import PeopleIcon from '@mui/icons-material/People';
 import React, { useState } from 'react'
+import { Link } from 'react-router-dom';
 
 const LeftBar = () => {
 
@@ -16,20 +17,24 @@ const LeftBar = () => {
             <Box position="fixed">
                 <List>
                     <ListItem disablePadding>
+                    <Link to={'/grocery'} style={{textDecoration:'none', color:'black'}}>
                         <ListItemButton>
                             <ListItemIcon>
                                 <HomeIcon />
                             </ListItemIcon>
                             <ListItemText primary="Home" />
                         </ListItemButton>
+                        </Link>
                     </ListItem>
                     <ListItem disablePadding>
+                        <Link to={'/lists'} style={{textDecoration:'none', color:'black'}}>
                         <ListItemButton>
                             <ListItemIcon>
                                 <LocalGroceryStoreIcon />
                             </ListItemIcon>
                             <ListItemText primary="My Lists" />
                         </ListItemButton>
+                        </Link>
                     </ListItem>
                     <ListItem disablePadding>
                         <ListItemButton>
@@ -40,12 +45,14 @@ const LeftBar = () => {
                         </ListItemButton>
                     </ListItem>
                     <ListItem disablePadding>
+                    <Link to={'/proile'} style={{textDecoration:'none', color:'black'}}>
                         <ListItemButton>
                             <ListItemIcon>
                                 <AccountCircleIcon />
                             </ListItemIcon>
                             <ListItemText primary="My Profile" />
                         </ListItemButton>
+                        </Link>
                     </ListItem>
                     <ListItem disablePadding>
                         <Container sx={{ display: "flex", alignItems: 'center' }}>

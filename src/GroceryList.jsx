@@ -23,7 +23,6 @@ const GroceryList = ({ lists, setLists }) => {
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [selectedStore, setSelectedStore] = useState(null);
   const [rows, setRows] = useState([]);
-  const [loading, setLoading] = useState(true);
   const [products, setProducts] = useState([]);
   const [stores, setStores] = useState([]);
 
@@ -230,18 +229,5 @@ const GroceryList = ({ lists, setLists }) => {
     </Box>
   );
 };
-
-const stores = [
-  "Aldi",
-  "Colruyt",
-  "Lidl",
-  "Carrefour",
-  "Cora",
-  "Picard",
-  "Action",
-  "Kruidvat",
-  "Delhaize",
-  "Primark",
-];
 
 export default GroceryList;

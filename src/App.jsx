@@ -1,45 +1,55 @@
-import { Stack, Typography } from "@mui/material";
 import Navbar from "./Navbar";
-import LeftBar from "./LeftBar";
-import GroceryList from "./GroceryList";
-import MyLists from "./MyLists";
-import RightBar from "./RightBar";
 import AddListComponent from "./AddListComponent";
 import { useState } from "react";
+import { MyGroceryListPage } from "./pages/MyGroceryListPage";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import { MyListsPage } from "./pages/MyListsPage";
+import SignIn from "./SignIn";
 
 function App() {
   const [lists, setLists] = useState([]);
 
+  const router = createBrowserRouter([
+    {
+      path: "/login",
+      element: (
+        <>
+          <Navbar />
+          <SignIn />
+        </>
+      ),
+    },
+    {
+      path: "/grocery",
+      element: (
+        <>
+          <Navbar />
+          <MyGroceryListPage lists={lists} setLists={setLists} />
+          <AddListComponent lists={lists} setLists={setLists} />
+        </>
+      ),
+    },
+    {
+      path: "/lists",
+      element: (
+        <>
+          <Navbar />
+          <MyListsPage lists={lists} />
+          <AddListComponent lists={lists} setLists={setLists} />
+        </>
+      ),
+    },
+    {
+      path: "/profile",
+      element: (
+      <></>
+      ),
+    },
+  ]);
+
   return (
     <>
-      <Navbar />
-      <Stack
-        direction="row"
-        justifyContent={"center"}
-        pt={2}
-        gap={2}
-        width="100%"
-      >
-        <LeftBar />
-        {lists.length !== 0 ? (
-          <GroceryList lists={lists} setLists={setLists} />
-        ) : (
-          <div style={{ width: "50%", height: "100%" }}>
-            <Typography
-              height="100%"
-              marginTop={25}
-              textAlign="center"
-              variant="h4"
-            >
-              {" "}
-              No grocery list selected
-            </Typography>
-          </div>
-        )}
-        {/* <MyLists lists={lists}/> */}
-        <RightBar />
-      </Stack>
-      <AddListComponent lists={lists} setLists={setLists} />
+      <RouterProvider router={router} />
     </>
   );
 }
