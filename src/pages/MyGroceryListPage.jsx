@@ -1,7 +1,7 @@
 import { Stack, Typography } from "@mui/material";
-import LeftBar from "../LeftBar";
-import GroceryList from "../GroceryList";
-import RightBar from "../RightBar";
+import LeftBar from "../components/LeftBar";
+import GroceryList from "../components/GroceryList";
+import RightBar from "../components/RightBar";
 
 export function MyGroceryListPage(props) {
   return (

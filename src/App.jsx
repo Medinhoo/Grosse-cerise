@@ -1,13 +1,18 @@
-import Navbar from "./Navbar";
-import AddListComponent from "./AddListComponent";
+import Navbar from "./components/Navbar";
+import AddListComponent from "./components/AddListComponent";
 import { useState } from "react";
 import { MyGroceryListPage } from "./pages/MyGroceryListPage";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { MyListsPage } from "./pages/MyListsPage";
-import SignIn from "./SignIn";
+import SignIn from "./components/SignIn";
+import AuthProvider from "./components/AuthProvider";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
+
   const [lists, setLists] = useState([]);
+
+  const [logged, setLogged] = useState(false);
 
   const router = createBrowserRouter([
     {
@@ -15,17 +20,19 @@ function App() {
       element: (
         <>
           <Navbar />
-          <SignIn />
+          <SignIn setLogged={setLogged}/>
         </>
       ),
     },
     {
-      path: "/grocery",
+      path: "/",
       element: (
         <>
+        <ProtectedRoute>
           <Navbar />
           <MyGroceryListPage lists={lists} setLists={setLists} />
           <AddListComponent lists={lists} setLists={setLists} />
+        </ProtectedRoute>
         </>
       ),
     },
@@ -48,9 +55,9 @@ function App() {
   ]);
 
   return (
-    <>
+    <AuthProvider isSignedIn={logged}>
       <RouterProvider router={router} />
-    </>
+    </AuthProvider>
   );
 }
 

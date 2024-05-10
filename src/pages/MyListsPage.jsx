@@ -1,7 +1,7 @@
 import { Stack } from "@mui/material";
-import LeftBar from "../LeftBar";
-import MyLists from "../MyLists";
-import RightBar from "../RightBar";
+import LeftBar from "../components/LeftBar";
+import MyLists from "../components/MyLists";
+import RightBar from "../components/RightBar";
 
 export function MyListsPage(props) {
     return (

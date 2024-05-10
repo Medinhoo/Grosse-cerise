@@ -1,4 +1,3 @@
-import * as React from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -12,6 +11,8 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 
 function Copyright(props) {
   return (
@@ -30,9 +31,13 @@ function Copyright(props) {
 
 const defaultTheme = createTheme();
 
-export default function SignIn() {
+export default function SignIn({setLogged}) {
+  const navigate = useNavigate()
 
-   const handleSubmit = async (event) => {
+  const [user, setUser] = useState(null);
+
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     const username = formData.get('email');
@@ -57,7 +62,13 @@ export default function SignIn() {
             }
         }
 
-        console.log('Connexion réussie');
+        // Récupérer les données de l'utilisateur depuis la réponse
+        setUser(await response.json())
+        setLogged(true)
+
+        // Rediriger l'utilisateur vers '/'
+        navigate('/');
+
     } catch (error) {
         console.error('Erreur de connexion:', error.message);
     }
