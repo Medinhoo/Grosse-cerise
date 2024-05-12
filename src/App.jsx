@@ -10,8 +10,6 @@ import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
 
-  const [lists, setLists] = useState([]);
-
   const router = createBrowserRouter([
     {
       path: "/login",
@@ -27,8 +25,8 @@ function App() {
       element: (
         <>
           <Navbar />
-          <MyGroceryListPage lists={lists} setLists={setLists} />
-          <AddListComponent lists={lists} setLists={setLists} />
+          <MyGroceryListPage/>
+          <AddListComponent />
         </>
       ),
     },
@@ -37,8 +35,8 @@ function App() {
       element: (
         <>
           <Navbar />
-          <MyListsPage lists={lists} />
-          <AddListComponent lists={lists} setLists={setLists} />
+          <MyListsPage/>
+          <AddListComponent/>
         </>
       ),
     },

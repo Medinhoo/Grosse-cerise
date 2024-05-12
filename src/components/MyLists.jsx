@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
@@ -8,9 +8,15 @@ import Checkbox from "@mui/material/Checkbox";
 import IconButton from "@mui/material/IconButton";
 import CommentIcon from "@mui/icons-material/Comment";
 import { Box, Paper, Typography } from "@mui/material";
+import { user$ } from "../rxjs";
 
-const MyLists = ({ lists }) => {
+const MyLists = () => {
   const [checked, setChecked] = useState([0]);
+  const [lists, setLists] = useState();
+
+  useEffect(() => {
+    user$.subscribe((u) => setLists(u.groceryLists));
+  }, []);
 
   const handleToggle = (value) => () => {
     const currentIndex = checked.indexOf(value);
@@ -44,10 +50,10 @@ const MyLists = ({ lists }) => {
         <List
           sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
         >
-          {lists.map((value) => {
-            return (
+          {lists &&
+            lists.map((list) => (
               <ListItem
-                key={value}
+                key={list.name}
                 secondaryAction={
                   <IconButton edge="end" aria-label="comments">
                     <CommentIcon />
@@ -57,23 +63,22 @@ const MyLists = ({ lists }) => {
               >
                 <ListItemButton
                   role={undefined}
-                  onClick={handleToggle(value)}
+                  onClick={handleToggle(list.name)}
                   dense
                 >
                   <ListItemIcon>
                     <Checkbox
                       edge="start"
-                      checked={checked.indexOf(value) !== -1}
+                      checked={checked.indexOf(list.name) !== -1}
                       tabIndex={-1}
                       disableRipple
-                      inputProps={{ "aria-labelledby": value }}
+                      inputProps={{ "aria-labelledby": list.name }}
                     />
                   </ListItemIcon>
-                  <ListItemText id={value} primary={value} />
+                  <ListItemText id={list.id} primary={list.name} /> 
                 </ListItemButton>
               </ListItem>
-            );
-          })}
+            ))}
         </List>
       </Paper>
     </Box>

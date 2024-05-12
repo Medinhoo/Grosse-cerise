@@ -27,10 +27,27 @@ const AddListComponent = () => {
   }, []);
   
 
-  const handleAddList = () => {
-    const newUser = {...user$.getValue(), groceryLists: [...user$.getValue().groceryLists, newList]};
+  const handleAddList = async () => {
+    const newUser = {...user$.getValue(), groceryLists: [...user$.getValue().groceryLists, {"name": newList, "products" : []}]};
     console.log(newUser)
     user$.next(newUser);
+
+    const id = newUser._id
+    console.log(id)
+
+    try {
+      await fetch(`https://api-learning-three.vercel.app/users/${id}`, {
+          method: 'PUT',
+          headers: {
+              'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(newUser),
+      });
+
+  } catch (error) {
+      console.error('Erreur update user ', error.message);
+  }
+
     handleCloseAddList();
   };
   
