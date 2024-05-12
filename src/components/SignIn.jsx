@@ -35,18 +35,14 @@ export default function SignIn() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const userSubscription = user$.subscribe((userData) => {
-      console.log('Données utilisateur mises à jour:', userData);
-    });
 
     const loggedSubscription = logged$.subscribe((isLogged) => {
       if (isLogged) {
-        navigate('/');
+        navigate('/lists');
       }
     });
 
     return () => {
-      userSubscription.unsubscribe();
       loggedSubscription.unsubscribe();
     };
   }, []);
