@@ -12,7 +12,8 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { handleSubmit, logged$, user$ } from '../rxjs';
 
 function Copyright(props) {
   return (
@@ -27,53 +28,28 @@ function Copyright(props) {
   );
 }
 
-// TODO remove, this demo shouldn't need to reset the theme.
-
 const defaultTheme = createTheme();
 
-export default function SignIn({setLogged}) {
-  const navigate = useNavigate()
+export default function SignIn() {
 
-  const [user, setUser] = useState(null);
+  const navigate = useNavigate();
 
+  useEffect(() => {
+    const userSubscription = user$.subscribe((userData) => {
+      console.log('Données utilisateur mises à jour:', userData);
+    });
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    const formData = new FormData(event.currentTarget);
-    const username = formData.get('email');
-    const password = formData.get('password');
-
-    try {
-        const response = await fetch('https://api-learning-three.vercel.app/login', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ username, password }),
-        });
-
-        if (!response.ok) {
-            if (response.status === 404) {
-                throw new Error('Utilisateur non trouvé');
-            } else if (response.status === 401) {
-                throw new Error('Mot de passe incorrect');
-            } else {
-                throw new Error('Erreur de connexion');
-            }
-        }
-
-        // Récupérer les données de l'utilisateur depuis la réponse
-        setUser(await response.json())
-        setLogged(true)
-
-        // Rediriger l'utilisateur vers '/'
+    const loggedSubscription = logged$.subscribe((isLogged) => {
+      if (isLogged) {
         navigate('/');
+      }
+    });
 
-    } catch (error) {
-        console.error('Erreur de connexion:', error.message);
-    }
-};
-
+    return () => {
+      userSubscription.unsubscribe();
+      loggedSubscription.unsubscribe();
+    };
+  }, []);
 
   return (
     <ThemeProvider theme={defaultTheme}>

@@ -20,7 +20,7 @@ function App() {
       element: (
         <>
           <Navbar />
-          <SignIn setLogged={setLogged}/>
+          <SignIn/>
         </>
       ),
     },
@@ -28,11 +28,9 @@ function App() {
       path: "/",
       element: (
         <>
-        <ProtectedRoute>
           <Navbar />
           <MyGroceryListPage lists={lists} setLists={setLists} />
           <AddListComponent lists={lists} setLists={setLists} />
-        </ProtectedRoute>
         </>
       ),
     },
@@ -55,9 +53,7 @@ function App() {
   ]);
 
   return (
-    <AuthProvider isSignedIn={logged}>
       <RouterProvider router={router} />
-    </AuthProvider>
   );
 }
 
