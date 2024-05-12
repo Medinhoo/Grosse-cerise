@@ -15,8 +15,9 @@ import { Add } from "@mui/icons-material";
 import { DataGrid } from "@mui/x-data-grid";
 import { Delete } from "@mui/icons-material";
 import React, { useEffect, useState } from "react";
+import { user$ } from "../rxjs";
 
-const GroceryList = ({ lists, setLists }) => {
+const GroceryList = () => {
   const [openAddProduct, setOpenAddProduct] = useState(false);
   const [quantity, setQuantity] = useState(0);
   const [importance, setImportance] = useState(0);
@@ -54,6 +55,16 @@ const GroceryList = ({ lists, setLists }) => {
   
     fetchData();
   }, []);
+  
+  const [lists, setLists] = useState([]);
+
+useEffect(() => {
+  const subcription = user$.subscribe(u => {
+    setLists(u.groceryLists);
+  })
+
+  return () => subcription.unsubscribe();
+}, []);
   
 
   const columns = [
@@ -113,7 +124,7 @@ const GroceryList = ({ lists, setLists }) => {
         <AppBar position="static">
           <Toolbar>
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-              {lists[0]}{" "}
+            {lists.length > 0 && lists[0].name}{" "}
             </Typography>
             <IconButton color="inherit" onClick={handleOpenAddProduct}>
               <Add />

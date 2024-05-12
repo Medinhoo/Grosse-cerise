@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Fab, Tooltip } from "@mui/material";
 import {
   Box,
@@ -10,18 +10,30 @@ import {
 } from "@mui/material";
 
 import AddIcon from "@mui/icons-material/Add";
+import { user$ } from "../rxjs";
 
-const AddListComponent = ({ lists, setLists }) => {
+const AddListComponent = () => {
   const [openAddList, setOpenAddList] = useState(false);
   const [newList, setnewList] = useState("");
-
+  
   const handleOpenAddList = () => setOpenAddList(true);
   const handleCloseAddList = () => setOpenAddList(false);
 
+
+  useEffect(() => {
+    const subcription = user$.subscribe()
+    
+    return () => subcription.unsubscribe()
+  }, []);
+  
+
   const handleAddList = () => {
-    setLists((l) => [...l, newList]);
+    const newUser = {...user$.getValue(), groceryLists: [...user$.getValue().groceryLists, newList]};
+    console.log(newUser)
+    user$.next(newUser);
     handleCloseAddList();
   };
+  
 
   return (
     <>

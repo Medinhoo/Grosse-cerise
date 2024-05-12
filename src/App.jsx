@@ -12,8 +12,6 @@ function App() {
 
   const [lists, setLists] = useState([]);
 
-  const [logged, setLogged] = useState(false);
-
   const router = createBrowserRouter([
     {
       path: "/login",

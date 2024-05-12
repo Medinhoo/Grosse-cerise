@@ -2,8 +2,22 @@ import { Stack, Typography } from "@mui/material";
 import LeftBar from "../components/LeftBar";
 import GroceryList from "../components/GroceryList";
 import RightBar from "../components/RightBar";
+import { user$ } from "../rxjs";
+import { useEffect, useState } from "react";
 
-export function MyGroceryListPage(props) {
+export function MyGroceryListPage() {
+
+  const [groceryListsLength, setGroceryListsLength] = useState();
+
+  useEffect(() => {
+    const subcription = user$.subscribe(u => {
+      setGroceryListsLength(u.groceryLists.length);
+    });
+  
+    return () => subcription.unsubscribe();
+  }, []);
+  
+
   return (
     <Stack
       direction="row"
@@ -13,8 +27,8 @@ export function MyGroceryListPage(props) {
       width="100%"
     >
       <LeftBar />
-      {props.lists.length !== 0 ? (
-        <GroceryList lists={props.lists} setLists={props.setLists} />
+      {groceryListsLength !== 0 ? (
+        <GroceryList/>
       ) : (
         <div
           style={{
