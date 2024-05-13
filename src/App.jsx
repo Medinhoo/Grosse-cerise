@@ -21,7 +21,7 @@ function App() {
       ),
     },
     {
-      path: "/",
+      path: "/grocery/:listName",
       element: (
         <>
           <Navbar />

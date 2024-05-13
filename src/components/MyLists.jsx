@@ -9,10 +9,12 @@ import IconButton from "@mui/material/IconButton";
 import CommentIcon from "@mui/icons-material/Comment";
 import { Box, Paper, Typography } from "@mui/material";
 import { user$ } from "../rxjs";
+import { useNavigate } from "react-router-dom";
 
 const MyLists = () => {
   const [checked, setChecked] = useState([0]);
   const [lists, setLists] = useState();
+  const navigate = useNavigate()
 
   useEffect(() => {
     user$.subscribe((u) => setLists(u.groceryLists));
@@ -53,9 +55,9 @@ const MyLists = () => {
           {lists &&
             lists.map((list) => (
               <ListItem
-                key={list.name}
+                key={list.name} 
                 secondaryAction={
-                  <IconButton edge="end" aria-label="comments">
+                  <IconButton edge="end" aria-label="comments" onClick={() => navigate(`/grocery/${list.name}`)}>
                     <CommentIcon />
                   </IconButton>
                 }
@@ -75,7 +77,7 @@ const MyLists = () => {
                       inputProps={{ "aria-labelledby": list.name }}
                     />
                   </ListItemIcon>
-                  <ListItemText id={list.id} primary={list.name} /> 
+                  <ListItemText id={list.name} primary={list.name} /> 
                 </ListItemButton>
               </ListItem>
             ))}

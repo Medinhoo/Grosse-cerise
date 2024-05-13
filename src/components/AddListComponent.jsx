@@ -33,7 +33,6 @@ const AddListComponent = () => {
     user$.next(newUser);
 
     const id = newUser._id
-    console.log(id)
 
     try {
       await fetch(`https://api-learning-three.vercel.app/users/${id}`, {

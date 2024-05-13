@@ -4,18 +4,11 @@ import { BehaviorSubject } from "rxjs";
 let logged = false
 export const logged$ = new BehaviorSubject(logged); 
 
-let user = {
-    "username": "bob",
-    "password": "bob",
-    "groceryLists": [
-        {
-            "name": "liste de courses du jeudi",
-            "products": []
-        }
-    ]
-}
-
+let user = {}
 export const user$ = new BehaviorSubject(user); 
+
+let rows = []
+export const rows$ = new BehaviorSubject(rows); 
 
 export const handleSubmit = async (event) => {
 

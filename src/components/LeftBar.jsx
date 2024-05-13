@@ -17,7 +17,7 @@ const LeftBar = () => {
             <Box position="fixed">
                 <List>
                     <ListItem disablePadding>
-                    <Link to={'/grocery'} style={{textDecoration:'none', color:'black'}}>
+                    <Link to={'/'} style={{textDecoration:'none', color:'black'}}>
                         <ListItemButton>
                             <ListItemIcon>
                                 <HomeIcon />
@@ -45,7 +45,7 @@ const LeftBar = () => {
                         </ListItemButton>
                     </ListItem>
                     <ListItem disablePadding>
-                    <Link to={'/proile'} style={{textDecoration:'none', color:'black'}}>
+                    <Link to={'/profile'} style={{textDecoration:'none', color:'black'}}>
                         <ListItemButton>
                             <ListItemIcon>
                                 <AccountCircleIcon />
