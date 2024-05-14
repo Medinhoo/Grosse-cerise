@@ -62,25 +62,23 @@ const GroceryList = () => {
 
   useEffect(() => {
     const subcription = user$.subscribe((u) => {
-      setSelectedList(u.groceryLists.find((list) => list.name === listName))
+      setSelectedList(u.groceryLists.find((list) => list.name === listName));
       setLists(u.groceryLists);
     });
 
-    const sub = rows$.subscribe(r => setRows(r))
     return () => {
-      subcription.unsubscribe()
-      sub.unsubscribe()
-    }
+      subcription.unsubscribe();
+    };
   }, []);
 
   useEffect(() => {
     if (selectedList && selectedList.products) {
-      const newRows = selectedList.products.map(product => ({
-        id: product._id,
-        productName: product.name,
+      const newRows = selectedList.products.map((product) => ({
+        id: product.id,
+        productName: product.productName,
         quantity: product.quantity,
         store: product.store,
-        importance: product.importance
+        importance: product.importance,
       }));
       setRows(newRows);
     }
@@ -112,48 +110,50 @@ const GroceryList = () => {
   const handleCloseAddProduct = () => setOpenAddProduct(false);
 
   const handleDeleteProduct = async (id) => {
-  
-  const newRows = rows.filter((row) => row.id !== id)
+    const newRows = rows.filter((row) => row.id !== id);
     setRows(newRows);
-    rows$.next(newRows)
-  const productIndex = selectedList.products.findIndex((product) => product._id === id);
+    const productIndex = selectedList.products.findIndex(
+      (product) => product.id === id
+    );
 
+    if (productIndex !== -1) {
+      const updatedProducts = [...selectedList.products];
+      updatedProducts.splice(productIndex, 1);
 
-  if (productIndex !== -1) {
-    const updatedProducts = [...selectedList.products];
-    updatedProducts.splice(productIndex, 1);
-
-    let updatedUser = { ...user$.getValue() };
-    updatedUser.groceryLists = updatedUser.groceryLists.map((list) => {
-      if (list.name === selectedList.name) {
-        return { ...list, products: updatedProducts };
-      }
-      return list;
-    });
-
-    const userId = updatedUser._id
-
-    try {
-      const response = await fetch(`https://api-learning-three.vercel.app/users/${userId}`, {
-          method: 'PUT',
-          headers: {
-              'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(updatedUser),
+      let updatedUser = { ...user$.getValue() };
+      updatedUser.groceryLists = updatedUser.groceryLists.map((list) => {
+        if (list.name === selectedList.name) {
+          return { ...list, products: updatedProducts };
+        }
+        return list;
       });
 
-      updatedUser = await response.json()
+      const userId = updatedUser._id;
 
-  } catch (error) {
-      console.error('Erreur update user ', error.message);
-  }
+      try {
+        const response = await fetch(
+          `https://api-learning-three.vercel.app/users/${userId}`,
+          {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(updatedUser),
+          }
+        );
 
-    user$.next(updatedUser);
-  }
-}
+        updatedUser = await response.json();
+      } catch (error) {
+        console.error("Erreur update user ", error.message);
+      }
+
+      user$.next(updatedUser);
+    }
+  };
 
   const handleAddProduct = async () => {
     const newProduct = {
+      id: rows.length + 1,
       productName: selectedProduct,
       quantity: quantity,
       store: selectedStore,
@@ -170,26 +170,29 @@ const GroceryList = () => {
       return list;
     });
 
-    const userId = updatedUser._id
+    const userId = updatedUser._id;
 
     try {
-      const response = await fetch(`https://api-learning-three.vercel.app/users/${userId}`, {
-          method: 'PUT',
+      const response = await fetch(
+        `https://api-learning-three.vercel.app/users/${userId}`,
+        {
+          method: "PUT",
           headers: {
-              'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
           body: JSON.stringify(updatedUser),
-      });
+        }
+      );
 
-      updatedUser = await response.json()
+      updatedUser = await response.json();
+    } catch (error) {
+      console.error("Erreur update user ", error.message);
+    } 
 
-  } catch (error) {
-      console.error('Erreur update user ', error.message);
-  }
-
- user$.next(updatedUser)
- setRows(r => [...r, newProduct]);
-    rows$.next([...rows, newProduct])
+    user$.next(updatedUser);
+    console.log('updatedUser', updatedUser)
+    setRows((r) => [...r, newProduct]);
+    console.log('rows',[...rows, newProduct])
 
     setQuantity(0);
     setImportance(0);
@@ -216,7 +219,12 @@ const GroceryList = () => {
           </Toolbar>
         </AppBar>
         <div style={{ height: 500, width: "100%" }}>
-          <DataGrid rows={rows} columns={columns} checkboxSelection getRowId={(row) => row._id}/>
+          <DataGrid
+            rows={rows}
+            columns={columns}
+            checkboxSelection
+            getRowId={row => row.id}
+          />
         </div>
       </Box>
       <Modal
