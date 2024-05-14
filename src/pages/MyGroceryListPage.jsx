@@ -11,7 +11,9 @@ export function MyGroceryListPage() {
 
   useEffect(() => {
     const subcription = user$.subscribe(u => {
+      if (u && u.groceryLists) {
       setGroceryListsLength(u.groceryLists.length);
+      }
     });
   
     return () => subcription.unsubscribe();

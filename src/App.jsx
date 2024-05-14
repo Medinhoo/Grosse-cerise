@@ -6,7 +6,6 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { MyListsPage } from "./pages/MyListsPage";
 import SignIn from "./components/SignIn";
 import AuthProvider from "./components/AuthProvider";
-import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
 
@@ -49,7 +48,9 @@ function App() {
   ]);
 
   return (
+    <AuthProvider>
       <RouterProvider router={router} />
+    </AuthProvider>
   );
 }
 

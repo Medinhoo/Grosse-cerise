@@ -15,7 +15,7 @@ import { Add } from "@mui/icons-material";
 import { DataGrid } from "@mui/x-data-grid";
 import { Delete } from "@mui/icons-material";
 import React, { useEffect, useState } from "react";
-import { rows$, user$ } from "../rxjs";
+import {fetchUsers, user$ } from "../rxjs";
 import { useParams } from "react-router-dom";
 
 const GroceryList = () => {
@@ -61,15 +61,24 @@ const GroceryList = () => {
   const [lists, setLists] = useState([]);
 
   useEffect(() => {
-    const subcription = user$.subscribe((u) => {
-      setSelectedList(u.groceryLists.find((list) => list.name === listName));
-      setLists(u.groceryLists);
-    });
-
+    let subscription;
+    if (user$) {
+      subscription = user$.subscribe((u) => {
+        if (u && u.groceryLists) {
+          const foundList = u.groceryLists.find((list) => list.name === listName);
+          setSelectedList(foundList);
+          setLists(u.groceryLists);
+        }
+      });
+    }
+  
     return () => {
-      subcription.unsubscribe();
+      if (subscription) {
+        subscription.unsubscribe();
+      }
     };
-  }, []);
+  }, [listName]); // Ajoutez listName comme dépendance pour que useEffect se déclenche lorsque le nom de la liste change
+  
 
   useEffect(() => {
     if (selectedList && selectedList.products) {
@@ -83,6 +92,10 @@ const GroceryList = () => {
       setRows(newRows);
     }
   }, [selectedList]);
+
+  useEffect(() => {
+    fetchUsers();
+  }, []); 
 
   const columns = [
     { field: "productName", headerName: "Product name", flex: 1 },
@@ -151,9 +164,15 @@ const GroceryList = () => {
     }
   };
 
+  const uniqueId = () => {
+    const timestamp = Date.now()
+    const random = Math.floor(Math.random()*1000);
+    return timestamp + random;
+  };
+
   const handleAddProduct = async () => {
     const newProduct = {
-      id: rows.length + 1,
+      id: uniqueId(),
       productName: selectedProduct,
       quantity: quantity,
       store: selectedStore,
@@ -171,6 +190,8 @@ const GroceryList = () => {
     });
 
     const userId = updatedUser._id;
+
+    console.log(updatedUser)
 
     try {
       const response = await fetch(
@@ -190,9 +211,7 @@ const GroceryList = () => {
     } 
 
     user$.next(updatedUser);
-    console.log('updatedUser', updatedUser)
     setRows((r) => [...r, newProduct]);
-    console.log('rows',[...rows, newProduct])
 
     setQuantity(0);
     setImportance(0);

@@ -1,19 +1,26 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { useEffect } from 'react';
+import { logged$, user$ } from '../rxjs';
 
-const AuthContext = createContext(null);
+const AuthProvider = ({ children }) => {
+    useEffect(() => {
+        const checkLoggedInUser = () => {
+            const user = localStorage.getItem('user');
+            if (user) {
+                const parsedUser = JSON.parse(user);
+                user$.next(parsedUser);
+                logged$.next(true);
+            }
+        };
 
-export default function AuthProvider({ children, isSignedIn }) {
-  const [user] = useState(isSignedIn ? { id: 1 } : null);
+        checkLoggedInUser();
 
-  return <AuthContext.Provider value={user}>{children}</AuthContext.Provider>;
-}
+        // Nettoyage de l'effet si nécessaire
+        return () => {
+            // Aucun nettoyage nécessaire dans ce cas
+        };
+    }, []);
 
-export const useAuth = () => {
-  const context = useContext(AuthContext);
-
-  if (context === undefined) {
-    throw new Error('useAuth must be used within an AuthProvider');
-  }
-
-  return context;
+    return <>{children}</>; // Rendu des composants enfants
 };
+
+export default AuthProvider;
