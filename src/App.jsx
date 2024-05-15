@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { MyGroceryListPage } from "./pages/MyGroceryListPage";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { MyListsPage } from "./pages/MyListsPage";
+import { MyProfilePage } from "./pages/MyProfilePage";
 import SignIn from "./components/SignIn";
 import AuthProvider from "./components/AuthProvider";
 import SignUp from "./components/SignUp";
@@ -71,7 +72,12 @@ function App() {
     },
     {
       path: "/profile",
-      element: <></>,
+      element: (  
+        <>
+        <Navbar />
+        <MyProfilePage/>
+      </>
+      ),
     },
   ]);
 

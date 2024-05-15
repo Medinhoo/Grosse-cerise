@@ -11,8 +11,12 @@ export const signupSuccessMessage$ = new BehaviorSubject('')
 
 export const darkMode$ = new BehaviorSubject(false)
 
+let loading = false;
+export const loading$ = new BehaviorSubject(loading);
+
 
 export const handleSubmit = async (event) => {
+  loading$.next(true)
   event.preventDefault();
   const formData = new FormData(event.currentTarget);
   const username = formData.get("username");
@@ -47,6 +51,7 @@ export const handleSubmit = async (event) => {
     logged = true;
     logged$.next(logged);
     localStorage.setItem("user", JSON.stringify(user));
+    loading$.next(false)
   } catch (error) {
     console.error("Erreur de connexion:", error.message);
   }

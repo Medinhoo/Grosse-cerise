@@ -22,6 +22,27 @@ const Navbar = () => {
   const navigate = useNavigate();
 
   const [isLoggedIn, setIsLoggedIn] = useState(logged$.getValue());
+  const [user, setUser] = useState();
+
+  useEffect(() => {
+    const subscription = logged$.subscribe((loggedIn) => {
+      setIsLoggedIn(loggedIn);
+    });
+
+    return () => {
+      subscription.unsubscribe();
+    };
+  }, []);
+
+  useEffect(() => {
+    const subscription = user$.subscribe((user) => {
+      setUser(user);
+    });
+
+    return () => {
+      subscription.unsubscribe();
+    };
+  }, []);
 
   const StyledToolbar = styled(Toolbar)({
     display: "flex",
@@ -34,16 +55,6 @@ const Navbar = () => {
     logged$.next(false);
     navigate("/login");
   };
-
-  useEffect(() => {
-    const subscription = logged$.subscribe((loggedIn) => {
-      setIsLoggedIn(loggedIn);
-    });
-
-    return () => {
-      subscription.unsubscribe();
-    };
-  }, []);
 
   return (
     <AppBar position="sticky" sx={{ width: "100%" }}>
@@ -68,7 +79,8 @@ const Navbar = () => {
         />
 
         {isLoggedIn ?
-          <Box display="flex" gap={3} sx={{ fontWeight: "bold" }}>
+          <Box display="flex" alignItems="center" gap={2} sx={{ fontWeight: "bold" }}>
+            <Typography>{user.username}</Typography>
            <IconButton aria-label="delete" onClick={handleDisconnect}>
   <LogoutIcon sx={{color:"white"}} />
 </IconButton>
