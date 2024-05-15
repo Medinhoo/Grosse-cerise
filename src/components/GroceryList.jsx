@@ -256,12 +256,13 @@ const GroceryList = () => {
         }}
       >
         <Stack
+                      bgcolor={"background.default"} color={"text.primary"}
+
           direction="column"
           justifyContent="center"
           alignItems="center"
           width={500}
           height={400}
-          bgcolor="white"
           p={3}
           borderRadius={5}
           gap={1}

@@ -75,12 +75,13 @@ const AddListComponent = () => {
         }}
       >
         <Stack
+              bgcolor={"background.default"} color={"text.primary"}
+
           direction="column"
           justifyContent="center"
           alignItems="center"
           width={500}
           height={200}
-          bgcolor="white"
           p={3}
           borderRadius={5}
           gap={3}
