@@ -11,7 +11,7 @@ const RightBar = () => {
       <Card sx={{ maxWidth: 345 }}>
         <CardMedia
           sx={{ height: 140 }}
-          image="./assets/chaos.jpg"
+          image="../assets/chaos.jpg"
           title="green iguana"
         />
         <CardContent>
@@ -51,7 +51,7 @@ const RightBar = () => {
       <Card sx={{ maxWidth: 345 }}>
         <CardMedia
           sx={{ height: 140 }}
-          image="./assets/wars.jpg"
+          image="../assets/wars.jpg"
           title="green iguana"
         />
         <CardContent>

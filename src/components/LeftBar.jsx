@@ -13,22 +13,29 @@ const LeftBar = () => {
 
     return (
         <Box
-            sx={{ display: { xs: "none", md: "block" }, width: '20%' }}>
+            sx={{
+                display: { xs: "none", md: "block" },
+                width: '20%',
+                height: '100%', // Assurez-vous que la hauteur occupe toute la hauteur du parent
+                justifyContent: 'center', // Centre les éléments verticalement
+            }}
+        >
             <Box position="fixed">
-                <List>
-                    <ListItem disablePadding>
-                    <Link to={'/'} style={{textDecoration:'none', color:'black'}}>
-                        <ListItemButton>
-                            <ListItemIcon>
-                                <HomeIcon />
-                            </ListItemIcon>
-                            <ListItemText primary="Home" />
-                        </ListItemButton>
+                <List sx={{ width: '100%' }}> {/* Utilisez une largeur de 100% pour que la liste occupe toute la largeur du parent */}
+                    {/* ListItems avec des styles personnalisés */}
+                    <ListItem disablePadding sx={{ width: '100%' }}>
+                        <Link to={'/lists'} style={{ textDecoration: 'none', color: 'black', width: '100%' }}>
+                        <ListItemButton sx={{paddingLeft:"40px"}}>
+                                <ListItemIcon>
+                                    <HomeIcon />
+                                </ListItemIcon>
+                                <ListItemText primary="Home" />
+                            </ListItemButton>
                         </Link>
                     </ListItem>
-                    <ListItem disablePadding>
+                    <ListItem disablePadding sx={{ width: '100%' }}>
                         <Link to={'/lists'} style={{textDecoration:'none', color:'black'}}>
-                        <ListItemButton>
+                        <ListItemButton sx={{paddingLeft:"40px"}}>
                             <ListItemIcon>
                                 <LocalGroceryStoreIcon />
                             </ListItemIcon>
@@ -36,17 +43,17 @@ const LeftBar = () => {
                         </ListItemButton>
                         </Link>
                     </ListItem>
-                    <ListItem disablePadding>
-                        <ListItemButton>
+                    <ListItem disablePadding sx={{ width: '100%' }}>
+                    <ListItemButton sx={{paddingLeft:"40px"}}>
                             <ListItemIcon>
                                 <PeopleIcon />
                             </ListItemIcon>
                             <ListItemText primary="Community" />
                         </ListItemButton>
                     </ListItem>
-                    <ListItem disablePadding>
+                    <ListItem disablePadding sx={{ width: '100%' }}>
                     <Link to={'/profile'} style={{textDecoration:'none', color:'black'}}>
-                        <ListItemButton>
+                    <ListItemButton sx={{paddingLeft:"40px"}}>
                             <ListItemIcon>
                                 <AccountCircleIcon />
                             </ListItemIcon>
@@ -54,11 +61,9 @@ const LeftBar = () => {
                         </ListItemButton>
                         </Link>
                     </ListItem>
-                    <ListItem disablePadding>
-                        <Container sx={{ display: "flex", alignItems: 'center' }}>
+                    <ListItem sx={{paddingLeft:"40px"}}>
                             <DarkModeIcon />
-                            <Switch defaultValue={false} color="primary" onClick={e => setDarkMode(!darkMode)} />
-                        </Container>
+                            <Switch defaultValue={false} color="primary" onClick={() => setDarkMode(!darkMode)} />
                     </ListItem>
                 </List>
             </Box>

@@ -32,7 +32,7 @@ const Navbar = () => {
        
         <Tooltip title="Open settings">
           <IconButton sx={{ p: 0 }}>
-            <Avatar alt="Spongebob" src="./assets/spongebob.jpg" />
+            <Avatar alt="Spongebob" src="../assets/spongebob.jpg" />
           </IconButton>
         </Tooltip>
 

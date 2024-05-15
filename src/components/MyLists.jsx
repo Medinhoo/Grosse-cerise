@@ -6,19 +6,24 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import Checkbox from "@mui/material/Checkbox";
 import IconButton from "@mui/material/IconButton";
-import CommentIcon from "@mui/icons-material/Comment";
+import ArrowCircleRightIcon from '@mui/icons-material/ArrowCircleRight';
 import { Box, Paper, Typography } from "@mui/material";
-import { user$ } from "../rxjs";
+import { fetchUsers, user$ } from "../rxjs";
 import { useNavigate } from "react-router-dom";
 
 const MyLists = () => {
   const [checked, setChecked] = useState([0]);
-  const [lists, setLists] = useState();
+  const [lists, setLists] = useState([]);
   const navigate = useNavigate()
 
   useEffect(() => {
     user$.subscribe((u) => setLists(u.groceryLists));
   }, []);
+
+  useEffect(() => {
+    fetchUsers();
+  }, []); 
+
 
   const handleToggle = (value) => () => {
     const currentIndex = checked.indexOf(value);
@@ -52,13 +57,15 @@ const MyLists = () => {
         <List
           sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
         >
-          {lists &&
+          {lists.length === 0 ? <Typography pt={4} textAlign="center" color="black" mb={1}>
+          You have no lists created
+        </Typography> :
             lists.map((list) => (
               <ListItem
                 key={list.name} 
                 secondaryAction={
                   <IconButton edge="end" aria-label="comments" onClick={() => navigate(`/grocery/${list.name}`)}>
-                    <CommentIcon />
+                    <ArrowCircleRightIcon />
                   </IconButton>
                 }
                 disablePadding
