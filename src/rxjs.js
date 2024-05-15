@@ -9,6 +9,9 @@ export const user$ = new BehaviorSubject(user);
 
 export const signupSuccessMessage$ = new BehaviorSubject('')
 
+export const darkMode$ = new BehaviorSubject(false)
+
+
 export const handleSubmit = async (event) => {
   event.preventDefault();
   const formData = new FormData(event.currentTarget);

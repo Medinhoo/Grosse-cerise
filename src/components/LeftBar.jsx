@@ -1,15 +1,21 @@
-import { Box, Container, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Switch } from '@mui/material'
+import { Box, Container, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Switch, ThemeProvider, createTheme } from '@mui/material'
 import LocalGroceryStoreIcon from '@mui/icons-material/LocalGroceryStore';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import HomeIcon from '@mui/icons-material/Home';
 import PeopleIcon from '@mui/icons-material/People';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
+import { darkMode$ } from '../rxjs';
 
 const LeftBar = () => {
 
     const [darkMode, setDarkMode] = useState(false);
+
+    const handleDark = () => {
+        setDarkMode(!darkMode)
+        darkMode$.next(!darkMode)
+    }
 
     return (
         <Box
@@ -19,7 +25,7 @@ const LeftBar = () => {
                 height: '100%', // Assurez-vous que la hauteur occupe toute la hauteur du parent
                 justifyContent: 'center', // Centre les éléments verticalement
             }}
-        >
+            >
             <Box position="fixed">
                 <List sx={{ width: '100%' }}> {/* Utilisez une largeur de 100% pour que la liste occupe toute la largeur du parent */}
                     {/* ListItems avec des styles personnalisés */}
@@ -63,7 +69,7 @@ const LeftBar = () => {
                     </ListItem>
                     <ListItem sx={{paddingLeft:"40px"}}>
                             <DarkModeIcon />
-                            <Switch defaultValue={false} color="primary" onClick={() => setDarkMode(!darkMode)} />
+                            <Switch defaultValue={false} color="primary" onClick={handleDark} />
                     </ListItem>
                 </List>
             </Box>

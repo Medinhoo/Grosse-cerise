@@ -1,14 +1,36 @@
 import Navbar from "./components/Navbar";
 import AddListComponent from "./components/AddListComponent";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { MyGroceryListPage } from "./pages/MyGroceryListPage";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { MyListsPage } from "./pages/MyListsPage";
 import SignIn from "./components/SignIn";
 import AuthProvider from "./components/AuthProvider";
 import SignUp from "./components/SignUp";
+import { ThemeProvider } from "@emotion/react";
+import { createTheme } from "@mui/material";
+import { darkMode$ } from "./rxjs";
 
 function App() {
+
+  const [darkMode, setDarkMode] = useState(false);
+
+  useEffect(() => {
+    const subscription = darkMode$.subscribe(isDarkMode => {
+      setDarkMode(isDarkMode);
+    });
+
+    return () => {
+      subscription.unsubscribe();
+    };
+  }, []);
+
+
+  const theme = createTheme({
+    palette: {
+      mode: darkMode ? "dark" : "light",
+    },
+  });
 
   const router = createBrowserRouter([
     {
@@ -16,7 +38,7 @@ function App() {
       element: (
         <>
           <Navbar />
-          <SignIn/>
+          <SignIn />
         </>
       ),
     },
@@ -25,7 +47,7 @@ function App() {
       element: (
         <>
           <Navbar />
-          <SignUp/>
+          <SignUp />
         </>
       ),
     },
@@ -34,7 +56,7 @@ function App() {
       element: (
         <>
           <Navbar />
-          <MyGroceryListPage/>
+          <MyGroceryListPage />
           <AddListComponent />
         </>
       ),
@@ -44,23 +66,23 @@ function App() {
       element: (
         <>
           <Navbar />
-          <MyListsPage/>
-          <AddListComponent/>
+          <MyListsPage />
+          <AddListComponent />
         </>
       ),
     },
     {
       path: "/profile",
-      element: (
-      <></>
-      ),
+      element: <></>,
     },
   ]);
 
   return (
-    <AuthProvider>
-      <RouterProvider router={router} />
-    </AuthProvider>
+    <ThemeProvider theme={theme}>
+      <AuthProvider>
+        <RouterProvider router={router} />
+      </AuthProvider>
+    </ThemeProvider>
   );
 }
 
