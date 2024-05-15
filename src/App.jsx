@@ -6,6 +6,7 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { MyListsPage } from "./pages/MyListsPage";
 import SignIn from "./components/SignIn";
 import AuthProvider from "./components/AuthProvider";
+import SignUp from "./components/SignUp";
 
 function App() {
 
@@ -16,6 +17,15 @@ function App() {
         <>
           <Navbar />
           <SignIn/>
+        </>
+      ),
+    },
+    {
+      path: "/sign",
+      element: (
+        <>
+          <Navbar />
+          <SignUp/>
         </>
       ),
     },

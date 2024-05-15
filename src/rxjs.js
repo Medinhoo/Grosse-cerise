@@ -7,10 +7,12 @@ export const logged$ = new BehaviorSubject(logged);
 let user = {};
 export const user$ = new BehaviorSubject(user);
 
+export const signupSuccessMessage$ = new BehaviorSubject('')
+
 export const handleSubmit = async (event) => {
   event.preventDefault();
   const formData = new FormData(event.currentTarget);
-  const username = formData.get("email");
+  const username = formData.get("username");
   const password = formData.get("password");
 
   try {

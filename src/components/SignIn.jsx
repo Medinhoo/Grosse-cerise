@@ -13,7 +13,9 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { handleSubmit, logged$, user$ } from '../rxjs';
+import { handleSubmit, logged$, signupSuccessMessage$, user$ } from '../rxjs';
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
 
 function Copyright(props) {
   return (
@@ -35,7 +37,6 @@ export default function SignIn() {
   const navigate = useNavigate();
 
   useEffect(() => {
-
     const loggedSubscription = logged$.subscribe((isLogged) => {
       if (isLogged) {
         navigate('/lists');
@@ -47,10 +48,31 @@ export default function SignIn() {
     };
   }, []);
 
+  const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    const subscription = signupSuccessMessage$.subscribe((message) => {
+      setOpen(message !== '');
+    });
+  
+    return () => {
+      subscription.unsubscribe();
+    };
+  }, []);
+  
+  const handleClose = () => {
+    setOpen(false)
+  }
+
   return (
     <ThemeProvider theme={defaultTheme}>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
+        <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+        <MuiAlert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
+          {signupSuccessMessage$.getValue()}
+        </MuiAlert>
+      </Snackbar>
         <Box
           sx={{
             marginTop: 8,
@@ -70,10 +92,9 @@ export default function SignIn() {
               margin="normal"
               required
               fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
+              id="username"
+              label="Username"
+              name="username"
               autoFocus
             />
             <TextField
@@ -105,7 +126,7 @@ export default function SignIn() {
                 </Link>
               </Grid>
               <Grid item>
-                <Link href="#" variant="body2">
+                <Link href="/sign" variant="body2">
                   {"Don't have an account? Sign Up"}
                 </Link>
               </Grid>
