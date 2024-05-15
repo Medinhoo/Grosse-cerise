@@ -8,15 +8,14 @@ import SignIn from "./components/SignIn";
 import AuthProvider from "./components/AuthProvider";
 import SignUp from "./components/SignUp";
 import { ThemeProvider } from "@emotion/react";
-import { createTheme } from "@mui/material";
+import { Box, createTheme } from "@mui/material";
 import { darkMode$ } from "./rxjs";
 
 function App() {
-
   const [darkMode, setDarkMode] = useState(false);
 
   useEffect(() => {
-    const subscription = darkMode$.subscribe(isDarkMode => {
+    const subscription = darkMode$.subscribe((isDarkMode) => {
       setDarkMode(isDarkMode);
     });
 
@@ -24,7 +23,6 @@ function App() {
       subscription.unsubscribe();
     };
   }, []);
-
 
   const theme = createTheme({
     palette: {
@@ -80,7 +78,9 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <AuthProvider>
-        <RouterProvider router={router} />
+      <Box bgcolor={theme.palette.background.default} color={theme.palette.text.primary}>
+          <RouterProvider router={router} />
+        </Box>
       </AuthProvider>
     </ThemeProvider>
   );
