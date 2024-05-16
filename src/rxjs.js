@@ -14,6 +14,8 @@ export const darkMode$ = new BehaviorSubject(false)
 let loading = false;
 export const loading$ = new BehaviorSubject(loading);
 
+let errorLogin = {};
+export const errorLogin$ = new BehaviorSubject(errorLogin);
 
 export const handleSubmit = async (event) => {
   loading$.next(true)
@@ -35,23 +37,30 @@ export const handleSubmit = async (event) => {
     );
 
     if (!response.ok) {
+
+      errorLogin$.next({"value": true})
+      loading$.next(false)
+
       if (response.status === 404) {
-        throw new Error("Utilisateur non trouvé");
+        errorLogin$.next({"value": true, "message": "Utilisateur non trouvé" })
+
       } else if (response.status === 401) {
-        throw new Error("Mot de passe incorrect");
+        errorLogin$.next({"value": true, "message": "Mot de passe incorrect" })
       } else {
-        throw new Error("Erreur de connexion");
+        errorLogin$.next({"value": true, "message": "Erreur de connexion" })
       }
     }
+    else if (response.ok){
+      // Récupérer les données de l'utilisateur depuis la réponse
+      user = await response.json();
+      user$.next(user);
+      
+      logged = true;
+      logged$.next(logged);
+      localStorage.setItem("user", JSON.stringify(user));
+      loading$.next(false)
+    }
 
-    // Récupérer les données de l'utilisateur depuis la réponse
-    user = await response.json();
-    user$.next(user);
-
-    logged = true;
-    logged$.next(logged);
-    localStorage.setItem("user", JSON.stringify(user));
-    loading$.next(false)
   } catch (error) {
     console.error("Erreur de connexion:", error.message);
   }

@@ -14,6 +14,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import {
+  errorLogin$,
   handleSubmit,
   loading$,
   logged$,
@@ -46,6 +47,7 @@ const defaultTheme = createTheme();
 
 export default function SignIn() {
   const [loading, setLoading] = useState(false);
+  const [errorLogin, setErrorLogin] = useState(errorLogin$.value);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -75,6 +77,16 @@ export default function SignIn() {
   useEffect(() => {
     const subscription = loading$.subscribe((l) => {
       setLoading(l);
+    });
+
+    return () => {
+      subscription.unsubscribe();
+    };
+  }, []);
+
+  useEffect(() => {
+    const subscription = errorLogin$.subscribe((error) => {
+      setErrorLogin(error);
     });
 
     return () => {
@@ -153,6 +165,16 @@ export default function SignIn() {
                   control={<Checkbox value="remember" color="primary" />}
                   label="Remember me"
                 />
+                {errorLogin.value && (
+                  <MuiAlert
+                    onClose={() => setErrorLogin((e) => !e.value)}
+                    autoHideDuration={1000}
+                    severity="error"
+                    sx={{ width: "100%" }}
+                  >
+                    {errorLogin.message}
+                  </MuiAlert>
+                )}
                 <Button
                   type="submit"
                   fullWidth
