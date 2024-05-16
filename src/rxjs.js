@@ -43,7 +43,6 @@ export const handleSubmit = async (event) => {
 
       if (response.status === 404) {
         errorLogin$.next({"value": true, "message": "Utilisateur non trouvé" })
-
       } else if (response.status === 401) {
         errorLogin$.next({"value": true, "message": "Mot de passe incorrect" })
       } else {
@@ -54,6 +53,7 @@ export const handleSubmit = async (event) => {
       // Récupérer les données de l'utilisateur depuis la réponse
       user = await response.json();
       user$.next(user);
+      errorLogin$.next({"value": false})
       
       logged = true;
       logged$.next(logged);
@@ -65,6 +65,7 @@ export const handleSubmit = async (event) => {
     console.error("Erreur de connexion:", error.message);
   }
 };
+
 
 export const fetchUsers = async () => {
   try {

@@ -2,7 +2,7 @@ import React from 'react'
 
 const MyProfile = () => {
   return (
-    <div>MyProfile</div>
+    <div style={{width:"50%"}}>MyProfile</div>
   )
 }
 

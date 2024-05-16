@@ -96,6 +96,7 @@ export default function SignIn() {
 
   const handleClose = () => {
     setOpen(false);
+    signupSuccessMessage$.next("")
   };
 
   return (
