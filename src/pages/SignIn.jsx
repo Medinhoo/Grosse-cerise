@@ -169,7 +169,6 @@ export default function SignIn() {
                 {errorLogin.value && (
                   <MuiAlert
                     onClose={() => setErrorLogin((e) => !e.value)}
-                    autoHideDuration={1000}
                     severity="error"
                     sx={{ width: "100%" }}
                   >
