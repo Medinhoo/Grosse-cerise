@@ -1,0 +1,47 @@
+$card-background-color: rgb(255, 255, 255);
+$text-color: #333;
+$font-family: 'Arial', sans-serif;
+$box-shadow: 0 4px 8px rgba(0, 0, 0, 0.299);
+$border-radius: 8px;
+$max-width: 400px;
+
+@mixin responsive-font-size($size, $small-size) {
+    font-size: $size;
+
+    @media (max-width: 480px) {
+        font-size: $small-size;
+    }
+}
+
+.profile {
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80vh;
+
+    .card {
+        background-color: $card-background-color;
+        border-radius: $border-radius;
+        box-shadow: $box-shadow;
+        padding: 20px;
+        max-width: $max-width;
+        width: 100%;
+        text-align: left;
+        font-family: $font-family;
+
+        p {
+            margin: 10px 0;
+            color: $text-color;
+
+            &:first-of-type {
+                font-weight: bold;
+                @include responsive-font-size(1.2em, 1em);
+            }
+
+            &:last-of-type {
+                margin-bottom: 0;
+            }
+        }
+    }
+}

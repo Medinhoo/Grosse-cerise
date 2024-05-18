@@ -1,0 +1,33 @@
+.profile {
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80vh;
+}
+.profile .card {
+  background-color: rgb(255, 255, 255);
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.299);
+  padding: 20px;
+  max-width: 400px;
+  width: 100%;
+  text-align: left;
+  font-family: "Arial", sans-serif;
+}
+.profile .card p {
+  margin: 10px 0;
+  color: #333;
+}
+.profile .card p:first-of-type {
+  font-weight: bold;
+  font-size: 1.2em;
+}
+@media (max-width: 480px) {
+  .profile .card p:first-of-type {
+    font-size: 1em;
+  }
+}
+.profile .card p:last-of-type {
+  margin-bottom: 0;
+}
