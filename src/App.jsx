@@ -11,6 +11,7 @@ import SignUp from "./pages/SignUp";
 import { ThemeProvider } from "@emotion/react";
 import { Box, createTheme } from "@mui/material";
 import { darkMode$ } from "./rxjs";
+import Home from "./pages/Home";
 
 function App() {
   const [darkMode, setDarkMode] = useState(false);
@@ -32,6 +33,12 @@ function App() {
   });
 
   const router = createBrowserRouter([
+    {
+      path: "/",
+      element: (
+        <Home/>
+      ),
+    },
     {
       path: "/login",
       element: (
